@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry excluding="empty-example/|addons/" kind="src" path=""/>
+	<classpathentry kind="src" path="addons"/>
+	<classpathentry kind="src" path="empty-example"/>
+	<classpathentry kind="con" path="org.eclipse.wst.jsdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path=""/>
+</classpath>
