@@ -1,0 +1,119 @@
+<script src="processing.js" type="text/javascript"></script>
+<script type="text/processing" data-processing-target="processing-canvas"> 
+
+/* @pjs font="Littledays.ttf"; */
+/* @pjs font="Kirvy-Regular.otf"; */
+/* @pjs preload="stage_mobile.jpg, singers_mobile.jpg, singers_open.jpg,
+orchestra_mobile.jpg, orchestra_open.jpg, conductor.png, tanssi.png"; */
+
+StartScreen start;
+SingerScreen singers;
+OrchestraScreen orchestra;
+
+
+int screenInt;
+
+void setup() {  
+  size(720, 3500); 
+  this.screenInt = 1;
+  this.start = new StartScreen(screenInt);
+  this.singers = new SingerScreen(screenInt);
+  this.orchestra = new OrchestraScreen(screenInt);
+}
+  
+void draw() {
+	
+  if (this.screenInt == 1){ 
+    this.start.draw();
+  } else if (this.screenInt == 2){
+    this.singers.draw();
+  } else if (this.screenInt == 3) {
+    this.orchestra.draw();
+  }
+
+}
+
+void mouseClicked() { 
+  if (this.screenInt == 1) {
+    //siirtymŠt aloitusnŠytšltŠ muihin nŠyttšihin
+    if (mouseX>0 && mouseX<width && mouseY>height/12 && mouseY<(height/12)*3){
+      //SingerScreeniin
+      this.screenInt = 2;
+    } else if (mouseX>(width/4) && mouseX<(width/4)*3 
+      && mouseY>((height/12)*3.1)-height/12 && mouseY<(height/12)*3.1+height/12) {
+        //OrchestraScreeniin
+        this.screenInt = 3;
+    }
+  }
+}
+
+class StartScreen {
+  PImage backgr;
+  
+  int screenInt;
+  
+  PImage foxes;
+  PImage conductor;
+
+
+  StartScreen(int screenInt){
+    this.screenInt = screenInt;
+    
+	this.backgr = loadImage("stage_mobile.jpg");
+
+    this.foxes = loadImage("tanssi.png");
+    this.conductor = loadImage("conductor.png");
+
+  }
+
+  void draw(){
+  	imageMode(CORNER);
+
+  	image(backgr);
+    
+   	imageMode(CENTER);
+    
+  	image(this.foxes, width/2, height/5.5, width*1.2, height/6);
+    image(this.conductor, width/2, (height/7)*2, width/3*2, height/16);
+   	 
+  }
+}
+
+class SingerScreen {
+  int screenInt;
+
+  PImage backgr;
+
+  SingerScreen(int screenInt) {
+    this.screenInt = screenInt;
+	this.backgr = loadImage("singers_mobile.jpg");
+
+  }
+
+  void draw(){
+	imageMode(CORNER);
+	image(backgr);
+  }
+}
+
+class OrchestraScreen {
+  int screenInt;
+
+  PImage backgr;
+
+  OrchestraScreen(int screenInt){
+  	this.screenInt = screenInt;
+  	this.backgr = loadImage("orchestra_mobile.jpg");
+  }
+
+  void draw() {
+  	imageMode(CORNER);
+  	image(backgr);
+  }
+
+}
+
+
+
+</script>
+<canvas id="processing-canvas"> </canvas>
