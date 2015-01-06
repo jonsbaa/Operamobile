@@ -57,6 +57,9 @@ void mouseClicked() {
   } else if (this.screenInt == 3) {
  	  if (mouseX>width*0.05-width*0.025 && mouseX<width*0.05+width*0.025 
 	    && mouseY>width*0.06-width*0.035 && mouseY<width*0.06+width*0.035) {
+      if (this.orchestra.activeInstrument != null) {
+        this.orchestra.activeInstrument = null; //suljetaan infoboksi
+      }
 	     this.screenInt = 1;
 	  } else {
       this.orchestra.checkMouseClicked(mouseX, mouseY); //tarkistetaan, onko klikattu jotakin
@@ -79,7 +82,7 @@ class StartScreen {
   StartScreen(int screenInt){
     this.screenInt = screenInt;
     
-	this.backgr = loadImage("stage2.jpg");
+	  this.backgr = loadImage("stage2.jpg");
     this.foxes = loadImage("tanssi.png");
     this.foxes2 = loadImage("tanssi2.png");
     this.conductor = loadImage("conductor.png");
@@ -90,15 +93,15 @@ class StartScreen {
   }
 
   void draw(){
-	imageMode(CORNER);
+  	imageMode(CORNER);
 
-	background(backgr);
-  
- 	imageMode(CENTER);
-  
-	image(this.foxes, width/2, height/2, width/2, height/2);
-  image(this.conductor, width/2, (height/4)*3.1, width/4, height/6);
- 	 
+  	background(backgr);
+    
+   	imageMode(CENTER);
+    
+  	image(this.foxes, width/2, height/2, width/2, height/2);
+    image(this.conductor, width/2, (height/4)*3.1, width/4, height/6);
+   	 
   }
 }
 
@@ -265,15 +268,47 @@ class OrchestraScreen {
 	PImage back;
   PImage close;
 
+  PImage play;
+  PImage pause;
+  PImage stop;
+
+  PImage play2;
+  PImage pause2;
+  PImage stop2;
+
   Instrument trombone;
   Instrument viola;
   Instrument activeInstrument;
+
+  boolean sample1Active;
+  boolean sample2Active;
+  boolean sample3Active;
+
+  boolean playActive;
+  boolean pauseActive;
+  boolean stopActive;
 
   OrchestraScreen(int screenInt){
   	this.screenInt = screenInt;
   	this.backgr = loadImage("orchestra.jpg");
   	this.back = loadImage("left37.png");
     this.close = loadImage("close-circled.png");
+
+    this.play = loadImage("play-circled2.png");
+    this.pause = loadImage("pause-circled.png");
+    this.stop = loadImage("stop-circled.png");
+
+    this.play2 = loadImage("play-circled4.png");
+    this.pause2 = loadImage("pause-circled4.png");
+    this.stop2 = loadImage("stop-circled4.png");
+
+    this.sample1Active = true;
+    this.sample2Active = false;
+    this.sample3Active = false;
+
+    this.playActive = false;
+    this.pauseActive = true;
+    this.stopActive = true;
 
     String descriptionTrb = "The trombone is a brass instrument. Sound is produced when the player’s vibrating lips cause the air column inside the instrument to vibrate. Trombones have a telescoping slide mechanism that varies the length of the instrument to change the pitch. The most frequently encountered trombones are the tenor trombone and bass trombone."; //Wikipedia
     this.trombone = new Instrument("The Trombone", descriptionTrb, "trombone.jpg");
@@ -315,8 +350,6 @@ class OrchestraScreen {
       rectMode(CENTER);
       rect(width*0.5, height*0.5, width*0.5, width*0.5, width*0.03);
 
-      image(this.close, width*0.725, height*0.2, width*0.04, width*0.04);
-
       //Instrument-olion attribuuteista haetaan sisalto boksiin
       
       imageMode(CENTER);
@@ -331,6 +364,48 @@ class OrchestraScreen {
       //textFont(this.font_small);
       textSize(width*0.019);
       text(this.activeInstrument.itext, width*0.28, height*0.45, width*0.45, height*0.28);
+      
+      image(this.close, width*0.725, height*0.2, width*0.04, width*0.04);
+
+      if (this.playActive == true) {
+        image(this.play2, width*0.3, height*0.77, width*0.04, width*0.04);
+      } else {
+        image(this.play, width*0.3, height*0.77, width*0.04, width*0.04);
+      }
+      
+      if (this.pauseActive == true) {
+        image(this.pause2, width*0.35, height*0.77, width*0.04, width*0.04);
+      } else {
+        image(this.pause, width*0.35, height*0.77, width*0.04, width*0.04);
+      }
+      
+      if (this.stopActive == true) {
+        image(this.stop2, width*0.4, height*0.77, width*0.04, width*0.04);
+      } else {
+        image(this.stop, width*0.4, height*0.77, width*0.04, width*0.04);
+      }
+
+      //piirretaan aanitiedostovaihtoehdot
+      
+      textSize(width*0.018); //skaalaus
+      textAlign(RIGHT);
+      rectMode(CENTER);
+      
+      for (int i = 0; i < 3; i++) { //tassa versiossa naytetaan max 3 ekaa aanitiedostoa
+      
+        if ((i == 0 && this.sample1Active == true) || (i == 1 && this.sample2Active == true) || (i == 2 && this.sample3Active == true)) {
+          stroke(140, 50, 100); //valitun korostus
+        } else {
+          stroke(40, 150, 190);
+        }
+        
+        fill(255);
+        rect(width*0.48 + i*width*0.1, height*0.77, width*0.09, height*0.04, width*0.03); //laatikko
+        
+        fill(0);
+        text("Sample " + (i+1), width*0.52 + i*width*0.1, height*0.78); //teksti
+      
+      }
       
     }
   }
@@ -350,6 +425,42 @@ class OrchestraScreen {
       if (mouseXpos>(width*0.725-width*0.02) && mouseXpos<(width*0.725+width*0.02) 
         && mouseYpos>(height*0.2-width*0.02) && mouseYpos<(height*0.2+width*0.02)) {
           this.activeInstrument = null; //ylakulman ruksia klikattu, suljetaan infoboksi
+          this.sample1Active = true;
+          this.sample2Active = false;
+          this.sample3Active = false;
+      } else if (mouseXpos>((width*0.48)-width*0.045) && mouseXpos<((width*0.48)+width*0.045) 
+        && mouseYpos>(height*0.77-height*0.02) && mouseYpos<(height*0.77+height*0.02)) {
+          this.sample1Active = true;
+          this.sample2Active = false;
+          this.sample3Active = false;
+      } else if (mouseXpos>((width*0.48 + 1*width*0.1)-width*0.045) && mouseXpos<((width*0.48 + 1*width*0.1)+width*0.045) 
+        && mouseYpos>(height*0.77-height*0.02) && mouseYpos<(height*0.77+height*0.02)) {
+          this.sample1Active = false;
+          this.sample2Active = true;
+          this.sample3Active = false;
+      } else if (mouseXpos>((width*0.48 + 2*width*0.1)-width*0.045) && mouseXpos<((width*0.48 + 2*width*0.1)+width*0.045) 
+        && mouseYpos>(height*0.77-height*0.02) && mouseYpos<(height*0.77+height*0.02)) {
+          this.sample1Active = false;
+          this.sample2Active = false;
+          this.sample3Active = true;
+      }
+
+      //aanentoistonappulat ja ruksi
+      if (mouseXpos>(width*0.3-width*0.02) && mouseXpos<(width*0.3+width*0.02) 
+        && mouseYpos>(height*0.77-width*0.02) && mouseYpos<(height*0.77+width*0.02)) {
+          this.playActive = true;
+          this.pauseActive = false;
+          this.stopActive = false;
+      } else if (mouseXpos>(width*0.35-width*0.02) && mouseXpos<(width*0.35+width*0.02) 
+        && mouseYpos>(height*0.77-width*0.02) && mouseYpos<(height*0.77+width*0.02)) {
+          this.playActive = false;
+          this.pauseActive = true;
+          this.stopActive = false;
+      } else if (mouseXpos>(width*0.4-width*0.02) && mouseXpos<(width*0.4+width*0.02) 
+        && mouseYpos>(height*0.77-width*0.02) && mouseYpos<(height*0.77+width*0.02)) {
+          this.playActive = false;
+          this.pauseActive = true;
+          this.stopActive = true;
       }
     }
   }
