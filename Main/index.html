@@ -2,8 +2,10 @@
 <script type="text/processing" data-processing-target="processing-canvas"> 
 
 /* @pjs font="Littledays.ttf"; */
-
-
+/* @pjs font="Kirvy-Regular.otf"; */
+/* @pjs preload="stage2.jpg, 1000pxFrame.png, help-circled.png, pause-circled.png,
+close-circled.png, conductor.png, hanna_rantala.png, jaakko_kortekangas.png, 
+orchestra.jpg, play-circled2.png, tanssi.png"; */
 
 StartScreen start;
 SingerScreen singers;
@@ -18,8 +20,8 @@ void setup() {
   size(1024,768); 
   this.screenInt = 1;
   this.start = new StartScreen(screenInt);
-	this.singers = new SingerScreen(screenInt);
-	this.orchestra = new OrchestraScreen(screenInt);
+  this.singers = new SingerScreen(screenInt);
+  this.orchestra = new OrchestraScreen(screenInt);
 
   PImage movieImage = loadImage("videoimage.png");
   this.video = new VideoScreen(screenInt, movieImage);
@@ -106,7 +108,7 @@ class StartScreen {
   StartScreen(int screenInt){
     this.screenInt = screenInt;
     
-	  this.backgr = loadImage("stage2.jpg");
+	this.backgr = loadImage("stage2.jpg");
     this.help = loadImage("help-circled.png");
     this.close = loadImage("close-circled.png");
 
@@ -148,14 +150,14 @@ class StartScreen {
       rect(width*0.5, height*0.5, width*0.5, width*0.5, width*0.03);
       
       textAlign(CENTER);
-      //textFont(this.font_header);
+      textFont(createFont("Littledays"));
       textSize(width*0.045); //skaalaus ikkunan koon mukaan
       fill(0); //tumma
-      text("Info", width*0.5, height*0.25);
-      //textFont(this.font_small);
+      text("Info", width*0.5, height*0.32);
+      textFont(createFont("Kirvy-Regular"));
       textSize(width*0.02);
       text("This application is designed for finding out more info on The Finnish National Opera's production The Cunning Little Vixen. By clicking on the fox figures on the stage, you'll find out about the singers. The conductor will lead you to learning about the orchestra.", width*0.28, height*0.4, width*0.45, height*0.6);
-      text("Created by: Emmi Linkola, Viivi Livio, Ilona Luukko, Joanna Mehtälä", width*0.28, height*0.65, width*0.45, height*0.6);
+      text("Created by: Emmi Linkola, Viivi Livio, Ilona Luukko, Joanna Mehtala", width*0.28, height*0.65, width*0.45, height*0.6);
 
       image(this.close, width*0.725, height*0.2, width*0.04, width*0.04);
     }
@@ -211,12 +213,12 @@ class SingerScreen {
     this.close = loadImage("close-circled.png");
     this.play = loadImage("play-circled2.png");
 
-    this.kortekangas = new Singer("Jaakko Kortekangas", "Forester", "At the Finnish National Opera during the season 2014-15: Boris Godunov: Andrei Shchelkalov, clerk of the Douma (Modest Mussorgsky), Die Fledermaus: Dr. Falke (Johann Strauss), The Cunning Little Vixen: Forester (Leoš Janáček), Kullervo: Soloist singer (Tero Saarinen – Jean Sibelius).", "jaakko_kortekangas.png", 1);
-	  this.rantala = new Singer("Hanna Rantala", "Vixen", "At the Finnish National Opera during the season 2014-15: Le nozze di Figaro: Susanna (W. A. Mozart), Die Fledermaus: Adele (Johann Strauss), The Cunning Little Vixen: Vixen (Leoš Janáček).", "hanna_rantala.png", 2);
-    this.riihimaki = new Singer("Juha Riihimäki", "Schoolmaster", "At the Finnish National Opera during the season 2014-15: Aida: Messenger (Giuseppe Verdi), Le nozze di Figaro: Don Curzio (W. A. Mozart), Die Fledermaus: Dr. Blind (Johann Strauss), Die Meistersinger von Nürnberg: Kunz Vogelgesang (Richard Wagner), The Cunning Little Vixen: Schoolmaster (Leoš Janáček).", "juha_riihimaki.png", 0);
-    this.heikkila = new Singer("Katariina Heikkilä", "Pásková", "At the Finnish National Opera during the season 2014-15: Christmas Music Tour: Solisti (Finnish National Opera's orchestra and soloists on tour), The Cunning Little Vixen: Mrs. Pásková (Leoš Janáček), The Cunning Little Vixen: Dog (Leoš Janáček).", "katariina_heikkila.png", 0);
-    this.soderlund = new Singer("Nicholas Söderlund", "Priest and Badger", "At the Finnish National Opera during the season 2014-15: Le nozze di Figaro: Antonio (W. A. Mozart), Die Fledermaus: Frank (Johann Strauss), Die Meistersinger von Nürnberg: Hans Schwarz (Richard Wagner), The Cunning Little Vixen: Priest (Leoš Janáček), The Cunning Little Vixen: Badger (Leoš Janáček).", "nicholas_soderlund.png", 0);
-    this.palo = new Singer("Mari Palo", "Fox", "At the Finnish National Opera during the season 2014-15: Le nozze di Figaro: Countess Almaviva (W. A. Mozart), The Cunning Little Vixen: Fox (Leoš Janáček).", "mari_palo.png", 0);
+    this.kortekangas = new Singer("Jaakko Kortekangas", "Forester", "At the Finnish National Opera during the season 2014-15: Boris Godunov: Andrei Shchelkalov, clerk of the Douma (Modest Mussorgsky), Die Fledermaus: Dr. Falke (Johann Strauss), The Cunning Little Vixen: Forester (Leos Janacek), Kullervo: Soloist singer (Tero Saarinen, Jean Sibelius).", "jaakko_kortekangas.png", 1);
+	this.rantala = new Singer("Hanna Rantala", "Vixen", "At the Finnish National Opera during the season 2014-15: Le nozze di Figaro: Susanna (W. A. Mozart), Die Fledermaus: Adele (Johann Strauss), The Cunning Little Vixen: Vixen (Leos Janacek).", "hanna_rantala.png", 2);
+    this.riihimaki = new Singer("Juha Riihimaki", "Schoolmaster", "At the Finnish National Opera during the season 2014-15: Aida: Messenger (Giuseppe Verdi), Le nozze di Figaro: Don Curzio (W. A. Mozart), Die Fledermaus: Dr. Blind (Johann Strauss), Die Meistersinger von Nurnberg: Kunz Vogelgesang (Richard Wagner), The Cunning Little Vixen: Schoolmaster (Leos Janacek).", "juha_riihimaki.png", 0);
+    this.heikkila = new Singer("Katariina Heikkila", "Paskova", "At the Finnish National Opera during the season 2014-15: Christmas Music Tour: Solisti (Finnish National Opera's orchestra and soloists on tour), The Cunning Little Vixen: Mrs. Paskova (Leos Janacek), The Cunning Little Vixen: Dog (Leos Janacek).", "katariina_heikkila.png", 0);
+    this.soderlund = new Singer("Nicholas Soderlund", "Priest and Badger", "At the Finnish National Opera during the season 2014-15: Le nozze di Figaro: Antonio (W. A. Mozart), Die Fledermaus: Frank (Johann Strauss), Die Meistersinger von Nurnberg: Hans Schwarz (Richard Wagner), The Cunning Little Vixen: Priest (Leos Janacek), The Cunning Little Vixen: Badger (Leos Janacek).", "nicholas_soderlund.png", 0);
+    this.palo = new Singer("Mari Palo", "Fox", "At the Finnish National Opera during the season 2014-15: Le nozze di Figaro: Countess Almaviva (W. A. Mozart), The Cunning Little Vixen: Fox (Leos Janacek).", "mari_palo.png", 0);
 
     this.activeSinger = null;
   }
@@ -225,7 +227,7 @@ class SingerScreen {
 	  background(50);
     
     textAlign(CENTER);
-	  textFont(createFont("Littledays"));
+	textFont(createFont("Littledays"));
     textSize(width*0.045); //skaalaus ikkunan koon mukaan
     fill(240); //vaalea
     text("The Singers", width*0.5, height*0.115);
@@ -257,14 +259,14 @@ class SingerScreen {
       rect(width*0.5, height*0.5, width*0.5, width*0.5, width*0.03);
 
       textAlign(CENTER);
-      //textFont(this.font);
+      textFont(createFont("Kirvy-Regular"));
       textSize(width*0.03); //skaalaus ikkunan koon mukaan
       fill(240); //vaalea
       text(this.activeSinger.name, width*0.57, height*0.28);
       textSize(width*0.025);
       text(this.activeSinger.character, width*0.57, height*0.33);
       
-      //textFont(this.font_small);
+      textFont(createFont("Kirvy-Regular"));
       textSize(width*0.02);
       text(this.activeSinger.text, width*0.28, height*0.45, width*0.45, height*0.28); 
       
@@ -347,10 +349,10 @@ class Singer {
 }
 
 class OrchestraScreen {
-	int screenInt;
+  int screenInt;
 
-	PImage backgr;
-	PImage back;
+  PImage backgr;
+  PImage back;
   PImage close;
 
   PImage play;
@@ -395,7 +397,7 @@ class OrchestraScreen {
     this.pauseActive = true;
     this.stopActive = true;
 
-    String descriptionTrb = "The trombone is a brass instrument. Sound is produced when the player’s vibrating lips cause the air column inside the instrument to vibrate. Trombones have a telescoping slide mechanism that varies the length of the instrument to change the pitch. The most frequently encountered trombones are the tenor trombone and bass trombone."; //Wikipedia
+    String descriptionTrb = "The trombone is a brass instrument. Sound is produced when the players vibrating lips cause the air column inside the instrument to vibrate. Trombones have a telescoping slide mechanism that varies the length of the instrument to change the pitch. The most frequently encountered trombones are the tenor trombone and bass trombone."; //Wikipedia
     this.trombone = new Instrument("The Trombone", descriptionTrb, "trombone.jpg");
     
     String descriptionVio = "The viola is a bowed string instrument. It is slightly larger than a violin in size and has a lower and deeper sound than a violin. Since the 18th century it has been the middle voice of the violin family, between the violin (which is tuned a perfect fifth above it) and the cello (which is tuned an octave below it)."; //Wikipedia
@@ -441,12 +443,12 @@ class OrchestraScreen {
       //tarkat arvot instrumenttikuvien kuvasuhteen mukaan (510 x 300 px) > 0.255 ja 0.15
       image(this.activeInstrument.image, width*0.5, height*0.35, width*0.255, width*0.15);
      
-      //textFont(this.font);
+      textFont(createFont("Littledays"));
       textSize(width*0.03); //skaalaus ikkunan koon mukaan
       fill(0); //musta
       textAlign(CENTER);
       text(this.activeInstrument.iname, width*0.5, height*0.23);
-      //textFont(this.font_small);
+      textFont(createFont("Kirvy-Regular"));
       textSize(width*0.019);
       text(this.activeInstrument.itext, width*0.28, height*0.45, width*0.45, height*0.28);
       
