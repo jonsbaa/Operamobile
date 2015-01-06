@@ -4,7 +4,8 @@
 /* @pjs font="Littledays.ttf"; */
 /* @pjs font="Kirvy-Regular.otf"; */
 /* @pjs preload="stage_mobile.jpg, singers_mobile.jpg, singers_open.jpg,
-orchestra_mobile.jpg, orchestra_open.jpg, conductor.png, tanssi.png"; */
+orchestra_mobile.jpg, orchestra_open.jpg, conductor.png, tanssi.png, 
+stage_mobile2.jpg, orchestra_mobile2.jpg, orchestra_open2.jpg"; */
 
 StartScreen start;
 SingerScreen singers;
@@ -79,8 +80,8 @@ class StartScreen {
   StartScreen(int screenInt) {
     this.screenInt = screenInt;
     
-	  this.backgr = loadImage("stage_mobile.jpg");
-    this.backgr.resize(1080, 1920); //1.5-kertainen
+	  this.backgr = loadImage("stage_mobile2.jpg");
+    //this.backgr.resize(1080, 1920); //1.5-kertainen
 
     this.foxes = loadImage("tanssi.png");
     this.conductor = loadImage("conductor.png");
@@ -142,10 +143,10 @@ class SingerScreen {
 
   SingerScreen(int screenInt) {
     this.screenInt = screenInt;
-	  this.backgr = loadImage("singers_mobile.jpg");
-    this.backgr.resize(1080, 4500); //1.5-kertainen
-    this.rantalaBackgr = loadImage("singers_open.jpg");
-    this.rantalaBackgr.resize(1080, 5395.5); //1.5-kertainen
+	  this.backgr = loadImage("singers_mobile2.jpg");
+    //this.backgr.resize(1080, 4500); //1.5-kertainen
+    this.rantalaBackgr = loadImage("singers_open2.jpg");
+    //this.rantalaBackgr.resize(1080, 5395.5); //1.5-kertainen
     this.activeBackgr = this.backgr;
     this.rantalaOpen = false;
   }
@@ -186,10 +187,10 @@ class OrchestraScreen {
 
   OrchestraScreen(int screenInt){
   	this.screenInt = screenInt;
-  	this.backgr = loadImage("orchestra_mobile.jpg");
-    this.backgr.resize(1080, 3855); //1.5-kertainen
-    this.tromboneBackgr = loadImage("orchestra_open.jpg");
-    this.tromboneBackgr.resize(1080, 4800); //1.5-kertainen
+  	this.backgr = loadImage("orchestra_mobile2.jpg");
+    //this.backgr.resize(1080, 3855); //1.5-kertainen
+    this.tromboneBackgr = loadImage("orchestra_open2.jpg");
+    //this.tromboneBackgr.resize(1080, 4800); //1.5-kertainen
     this.activeBackgr = this.backgr;
     this.tromboneOpen = false;
   }
