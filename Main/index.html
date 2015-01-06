@@ -74,6 +74,12 @@ void mouseClicked() {
  	  if (mouseX>width*0.05-width*0.025 && mouseX<width*0.05+width*0.025 
 	    && mouseY>width*0.06-width*0.035 && mouseY<width*0.06+width*0.035) {
       if (this.orchestra.activeInstrument != null) {
+        this.orchestra.playActive = false;
+        this.orchestra.pauseActive = true;
+        this.orchestra.stopActive = true;
+        this.orchestra.sample1Active = true;
+        this.orchestra.sample2Active = false;
+        this.orchestra.sample3Active = false;
         this.orchestra.activeInstrument = null; //suljetaan infoboksi
       }
 	     this.screenInt = 1;
@@ -548,6 +554,11 @@ class OrchestraScreen {
           this.playActive = false;
           this.pauseActive = true;
           this.stopActive = true;
+      } else if (mouseXpos>(width*0.725-width*0.02) && mouseXpos<(width*0.725+width*0.02) 
+        && mouseYpos>(height*0.2-width*0.02) && mouseYpos<(height*0.2+width*0.02)) {
+          this.playActive = false;
+          this.pauseActive = true;
+          this.stopActive = true;
       }
     }
   }
@@ -675,6 +686,10 @@ class VideoScreen {
         this.pauseActive = true;
         this.stopActive = true;    
    
+    } else if (mouseXpos>width*0.05-width*0.025 && mouseXpos<width*0.05+width*0.025 && mouseYpos>width*0.06-width*0.035 && mouseYpos<width*0.06+width*0.035) {
+        this.playActive = false; //backia klikattu
+        this.pauseActive = true;
+        this.stopActive = true;  
     }
 
   }
