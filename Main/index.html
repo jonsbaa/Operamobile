@@ -49,6 +49,11 @@ void mouseClicked() {
       && mouseY>((height/4)*3.1)-height/12 && mouseY<(height/4)*3.1+height/12) {
         //OrchestraScreeniin
         this.screenInt = 3;
+    } else if (mouseX > (width*0.95-width*0.02) && mouseX < (width*0.95+width*0.02) && mouseY > (height*0.94-width*0.02) && mouseY < (height*0.94+width*0.02)) {
+      this.start.checkMouseClicked(mouseX, mouseY);
+    } else if (mouseX > (width*0.725-width*0.02) && mouseX < (width*0.725+width*0.02) 
+        && mouseY > (height*0.2-width*0.02) && mouseY < (height*0.2+width*0.02)) {
+      this.start.checkMouseClicked(mouseX, mouseY);
     }
   } else if (this.screenInt == 2) {
   	if (mouseX>width*0.05-width*0.025 && mouseX<width*0.05+width*0.025 
@@ -84,6 +89,8 @@ void mouseClicked() {
 
 class StartScreen {
   PImage backgr;
+  PImage help;
+  PImage close;
   
   int screenInt;
   
@@ -91,13 +98,18 @@ class StartScreen {
   PImage foxes2;
   PImage conductor;
   PImage conductor2;
+
   boolean foxesOver;
   boolean conductorOver;
+  boolean helpClicked;
 
   StartScreen(int screenInt){
     this.screenInt = screenInt;
     
 	  this.backgr = loadImage("stage2.jpg");
+    this.help = loadImage("help-circled.png");
+    this.close = loadImage("close-circled.png");
+
     this.foxes = loadImage("tanssi.png");
     this.foxes2 = loadImage("tanssi2.png");
     this.conductor = loadImage("conductor.png");
@@ -105,6 +117,7 @@ class StartScreen {
     
     this.foxesOver = false;
     this.conductorOver = false;
+    this.helpClicked = false;
   }
 
   void draw(){
@@ -116,8 +129,50 @@ class StartScreen {
     
   	image(this.foxes, width/2, height/2, width/2, height/2);
     image(this.conductor, width/2, (height/4)*3.1, width/4, height/6);
+
+    image(this.help, width*0.95, height*0.94, width*0.04, width*0.04);
+
+    this.drawBox();
    	 
   }
+
+  void drawBox() {
+
+    if (this.helpClicked == true) {
+      fill(255); //vaalea
+      stroke(50); //tumma
+      strokeWeight(3);
+      
+      //piirretaan boksi
+      rectMode(CENTER);
+      rect(width*0.5, height*0.5, width*0.5, width*0.5, width*0.03);
+      
+      textAlign(CENTER);
+      //textFont(this.font_header);
+      textSize(width*0.045); //skaalaus ikkunan koon mukaan
+      fill(0); //tumma
+      text("Info", width*0.5, height*0.25);
+      //textFont(this.font_small);
+      textSize(width*0.02);
+      text("This application is designed for finding out more info on The Finnish National Opera's production The Cunning Little Vixen. By clicking on the fox figures on the stage, you'll find out about the singers. The conductor will lead you to learning about the orchestra.", width*0.28, height*0.4, width*0.45, height*0.6);
+      text("Created by: Emmi Linkola, Viivi Livio, Ilona Luukko, Joanna Mehtälä", width*0.28, height*0.65, width*0.45, height*0.6);
+
+      image(this.close, width*0.725, height*0.2, width*0.04, width*0.04);
+    }
+
+  }
+
+  void checkMouseClicked(int mouseXpos, int mouseYpos) {
+    if (mouseXpos > (width*0.95-width*0.02) && mouseXpos < (width*0.95+width*0.02) && mouseYpos > (height*0.94-width*0.02) && mouseYpos < (height*0.94+width*0.02)) {
+      this.helpClicked = true;
+    } else if (mouseXpos > (width*0.725-width*0.02) && mouseXpos < (width*0.725+width*0.02) 
+        && mouseYpos > (height*0.2-width*0.02) && mouseYpos < (height*0.2+width*0.02)) {
+      this.helpClicked = false;
+    } else {
+      this.helpClicked = false;
+    }
+  }
+
 }
 
 class SingerScreen {
