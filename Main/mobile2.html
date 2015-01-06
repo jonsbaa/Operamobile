@@ -3,9 +3,8 @@
 
 /* @pjs font="Littledays.ttf"; */
 /* @pjs font="Kirvy-Regular.otf"; */
-/* @pjs preload="stage_mobile.jpg, singers_mobile.jpg, singers_open.jpg,
-orchestra_mobile.jpg, orchestra_open.jpg, conductor.png, tanssi.png, 
-stage_mobile2.jpg, orchestra_mobile2.jpg, orchestra_open2.jpg"; */
+/* @pjs preload="singers_mobile2.jpg, singers_open3.jpg, conductor.png, tanssi.png, 
+stage_mobile2.jpg, orchestra_mobile2.jpg, orchestra_open3.jpg, help-circled.png"; */
 
 StartScreen start;
 SingerScreen singers;
@@ -16,7 +15,7 @@ int screenInt;
 
 void setup() {  
   //size(720, 3500); 
-  size(1080, 5395.5); //1.5-kertainen, korjattu vastaamaan singers_open2.jpg
+  size(1080, 5600); //1.5-kertainen, korjattu vastaamaan singers_open3.jpg
   this.screenInt = 1;
   this.start = new StartScreen(screenInt);
   this.singers = new SingerScreen(screenInt);
@@ -81,7 +80,6 @@ class StartScreen {
     this.screenInt = screenInt;
     
 	  this.backgr = loadImage("stage_mobile2.jpg");
-    //this.backgr.resize(1080, 1920); //1.5-kertainen
 
     this.foxes = loadImage("tanssi.png");
     this.conductor = loadImage("conductor.png");
@@ -144,9 +142,7 @@ class SingerScreen {
   SingerScreen(int screenInt) {
     this.screenInt = screenInt;
 	  this.backgr = loadImage("singers_mobile2.jpg");
-    //this.backgr.resize(1080, 4500); //1.5-kertainen
-    this.rantalaBackgr = loadImage("singers_open2.jpg");
-    //this.rantalaBackgr.resize(1080, 5395.5); //1.5-kertainen
+    this.rantalaBackgr = loadImage("singers_open3.jpg");
     this.activeBackgr = this.backgr;
     this.rantalaOpen = false;
   }
@@ -154,10 +150,6 @@ class SingerScreen {
   void draw(){
   	imageMode(CORNER);
   	image(this.activeBackgr);
-    //rectMode(CENTER);
-    //noFill();
-    //rect(width*0.125, width*0.125, width*0.14, width*0.14);
-    //rect(width*0.49, width*0.61, width*0.73, width*0.73);
   }
 
   void checkMouseClicked(int mouseXpos, int mouseYpos) {
@@ -188,9 +180,7 @@ class OrchestraScreen {
   OrchestraScreen(int screenInt){
   	this.screenInt = screenInt;
   	this.backgr = loadImage("orchestra_mobile2.jpg");
-    //this.backgr.resize(1080, 3855); //1.5-kertainen
-    this.tromboneBackgr = loadImage("orchestra_open2.jpg");
-    //this.tromboneBackgr.resize(1080, 4800); //1.5-kertainen
+    this.tromboneBackgr = loadImage("orchestra_open3.jpg");
     this.activeBackgr = this.backgr;
     this.tromboneOpen = false;
   }
@@ -198,9 +188,6 @@ class OrchestraScreen {
   void draw() {
   	imageMode(CORNER);
   	image(this.activeBackgr);
-    //noFill();
-    //rectMode(CENTER);
-    //rect(width*0.5, width*0.34, width, width*0.26);
   }
 
   void checkMouseClicked(int mouseXpos, int mouseYpos) {

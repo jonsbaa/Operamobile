@@ -3,9 +3,11 @@
 
 /* @pjs font="Littledays.ttf"; */
 /* @pjs font="Kirvy-Regular.otf"; */
-/* @pjs preload="stage2.jpg, 1000pxFrame.png, help-circled.png, pause-circled.png,
+/* @pjs preload="stage2.jpg, stage.jpg, help-circled.png, pause-circled.png,
 close-circled.png, conductor.png, hanna_rantala.png, jaakko_kortekangas.png, 
-orchestra.jpg, play-circled2.png, tanssi.png"; */
+juha_riihimaki.png, katariina_heikkila.png, nicholas_soderlund.png, mari_palo.png, 
+orchestra.jpg, play-circled2.png, play-circled4.png, tanssi.png, videoimage.png, 
+left37.png, pause-circled4.png, stop-circled4.png"; */
 
 StartScreen start;
 SingerScreen singers;
@@ -13,7 +15,6 @@ OrchestraScreen orchestra;
 VideoScreen video;
 
 int screenInt;
-
 
 
 void setup() {  
@@ -103,9 +104,7 @@ class StartScreen {
   int screenInt;
   
   PImage foxes;
-  PImage foxes2;
   PImage conductor;
-  PImage conductor2;
 
   boolean foxesOver;
   boolean conductorOver;
@@ -119,9 +118,7 @@ class StartScreen {
     this.close = loadImage("close-circled.png");
 
     this.foxes = loadImage("tanssi.png");
-    this.foxes2 = loadImage("tanssi2.png");
     this.conductor = loadImage("conductor.png");
-    this.conductor2 = loadImage("conductor2.png");
     
     this.foxesOver = false;
     this.conductorOver = false;
