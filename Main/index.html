@@ -8,6 +8,7 @@
 StartScreen start;
 SingerScreen singers;
 OrchestraScreen orchestra;
+VideoScreen video;
 
 int screenInt;
 
@@ -20,6 +21,8 @@ void setup() {
 	this.singers = new SingerScreen(screenInt);
 	this.orchestra = new OrchestraScreen(screenInt);
 
+  PImage movieImage = loadImage("videoimage.png");
+  this.video = new VideoScreen(screenInt, movieImage);
   
 }
   
@@ -30,6 +33,9 @@ void draw() {
     this.singers.draw();
   } else if (this.screenInt == 3) {
     this.orchestra.draw();
+  } else if (this.screenInt == 4) {
+    this.video.draw();
+    //this.video.show(this.singers.number);
   }
 }
 
@@ -53,6 +59,9 @@ void mouseClicked() {
       this.screenInt = 1;
     } else {
       this.singers.checkMouseClicked(mouseX, mouseY); //tarkistetaan, onko klikattu jotakin
+      if (this.singers.screenInt == 4){
+        this.screenInt = 4;
+      }
     }
   } else if (this.screenInt == 3) {
  	  if (mouseX>width*0.05-width*0.025 && mouseX<width*0.05+width*0.025 
@@ -63,6 +72,12 @@ void mouseClicked() {
 	     this.screenInt = 1;
 	  } else {
       this.orchestra.checkMouseClicked(mouseX, mouseY); //tarkistetaan, onko klikattu jotakin
+    }
+  } else if (this.screenInt == 4) {
+    this.video.checkMouseClicked(mouseX, mouseY);
+    if (mouseX>width*0.05-width*0.025 && mouseX<width*0.05+width*0.025 && mouseY>width*0.06-width*0.035 && mouseY<width*0.06+width*0.035) {
+      this.singers.screenInt = 2;
+      this.screenInt = 2;
     }
   }
 }
@@ -122,25 +137,27 @@ class SingerScreen {
   PImage katariina_heikkila;
   PImage nicholas_soderlund;
   PImage mari_palo;
+
   PImage back;
   PImage close;
+  PImage play;
 
   SingerScreen(int screenInt) {
     this.screenInt = screenInt;
 
-	this.jaakko_kortekangas = loadImage("jaakko_kortekangas.png");
-  this.hanna_rantala = loadImage("hanna_rantala.png");
-  this.juha_riihimaki = loadImage("juha_riihimaki.png");
-  this.katariina_heikkila = loadImage("katariina_heikkila.png");
-  this.nicholas_soderlund = loadImage("nicholas_soderlund.png");
-  this.mari_palo = loadImage("mari_palo.png");
-	this.back = loadImage("left37.png");
-  this.close = loadImage("close-circled.png");
+  	this.jaakko_kortekangas = loadImage("jaakko_kortekangas.png");
+    this.hanna_rantala = loadImage("hanna_rantala.png");
+    this.juha_riihimaki = loadImage("juha_riihimaki.png");
+    this.katariina_heikkila = loadImage("katariina_heikkila.png");
+    this.nicholas_soderlund = loadImage("nicholas_soderlund.png");
+    this.mari_palo = loadImage("mari_palo.png");
 
-	
-    
+  	this.back = loadImage("left37.png");
+    this.close = loadImage("close-circled.png");
+    this.play = loadImage("play-circled2.png");
+
     this.kortekangas = new Singer("Jaakko Kortekangas", "Forester", "At the Finnish National Opera during the season 2014-15: Boris Godunov: Andrei Shchelkalov, clerk of the Douma (Modest Mussorgsky), Die Fledermaus: Dr. Falke (Johann Strauss), The Cunning Little Vixen: Forester (Leoš Janáček), Kullervo: Soloist singer (Tero Saarinen – Jean Sibelius).", "jaakko_kortekangas.png", 1);
-	this.rantala = new Singer("Hanna Rantala", "Vixen", "At the Finnish National Opera during the season 2014-15: Le nozze di Figaro: Susanna (W. A. Mozart), Die Fledermaus: Adele (Johann Strauss), The Cunning Little Vixen: Vixen (Leoš Janáček).", "hanna_rantala.png", 2);
+	  this.rantala = new Singer("Hanna Rantala", "Vixen", "At the Finnish National Opera during the season 2014-15: Le nozze di Figaro: Susanna (W. A. Mozart), Die Fledermaus: Adele (Johann Strauss), The Cunning Little Vixen: Vixen (Leoš Janáček).", "hanna_rantala.png", 2);
     this.riihimaki = new Singer("Juha Riihimäki", "Schoolmaster", "At the Finnish National Opera during the season 2014-15: Aida: Messenger (Giuseppe Verdi), Le nozze di Figaro: Don Curzio (W. A. Mozart), Die Fledermaus: Dr. Blind (Johann Strauss), Die Meistersinger von Nürnberg: Kunz Vogelgesang (Richard Wagner), The Cunning Little Vixen: Schoolmaster (Leoš Janáček).", "juha_riihimaki.png", 0);
     this.heikkila = new Singer("Katariina Heikkilä", "Pásková", "At the Finnish National Opera during the season 2014-15: Christmas Music Tour: Solisti (Finnish National Opera's orchestra and soloists on tour), The Cunning Little Vixen: Mrs. Pásková (Leoš Janáček), The Cunning Little Vixen: Dog (Leoš Janáček).", "katariina_heikkila.png", 0);
     this.soderlund = new Singer("Nicholas Söderlund", "Priest and Badger", "At the Finnish National Opera during the season 2014-15: Le nozze di Figaro: Antonio (W. A. Mozart), Die Fledermaus: Frank (Johann Strauss), Die Meistersinger von Nürnberg: Hans Schwarz (Richard Wagner), The Cunning Little Vixen: Priest (Leoš Janáček), The Cunning Little Vixen: Badger (Leoš Janáček).", "nicholas_soderlund.png", 0);
@@ -150,28 +167,26 @@ class SingerScreen {
   }
 
   void draw(){
-	background(50);
+	  background(50);
     
     textAlign(CENTER);
-	textFont(createFont("Littledays"));
+	  textFont(createFont("Littledays"));
     textSize(width*0.045); //skaalaus ikkunan koon mukaan
     fill(240); //vaalea
     text("The Singers", width*0.5, height*0.115);
 
-	imageMode(CENTER);
-	
-	image(this.jaakko_kortekangas, width*0.2, height*0.36, width*0.23, width*0.23);
-	image(this.hanna_rantala, width*0.5, height*0.36, width*0.23, width*0.23);
-	image(juha_riihimaki, width*0.8, height*0.36, width*0.23, width*0.23);
-	image(this.katariina_heikkila, width*0.2, height*0.77, width*0.23, width*0.23);
-	image(this.nicholas_soderlund, width*0.5, height*0.77, width*0.23, width*0.23);
-	image(this.mari_palo, width*0.8, height*0.77, width*0.23, width*0.23);
+  	imageMode(CENTER);
+  	
+  	image(this.jaakko_kortekangas, width*0.2, height*0.36, width*0.23, width*0.23);
+  	image(this.hanna_rantala, width*0.5, height*0.36, width*0.23, width*0.23);
+  	image(juha_riihimaki, width*0.8, height*0.36, width*0.23, width*0.23);
+  	image(this.katariina_heikkila, width*0.2, height*0.77, width*0.23, width*0.23);
+  	image(this.nicholas_soderlund, width*0.5, height*0.77, width*0.23, width*0.23);
+  	image(this.mari_palo, width*0.8, height*0.77, width*0.23, width*0.23);
 
-	image(this.back, width*0.05, height*0.06, width*0.05, height*0.07);
+  	image(this.back, width*0.05, height*0.06, width*0.05, height*0.07);
 
-      
-
-  drawBox();
+    drawBox();
 
   }
 
@@ -202,6 +217,18 @@ class SingerScreen {
       image(this.activeSinger.image, width*0.34, height*0.29, width*0.15, width*0.15); 
 
       image(this.close, width*0.725, height*0.2, width*0.04, width*0.04);
+
+      if (this.activeSinger.videonumber != 0) { //piirretaan videoplayboksi
+        
+        image(this.play, width*0.3, height*0.77, width*0.04, width*0.04);
+        stroke(20);
+        noFill();
+        rect(width*0.37, height*0.77, width*0.2, height*0.07, width*0.1);
+        
+        fill(240);
+        text("Play video", width*0.39, height*0.78);
+      }
+
     }
 
   }
@@ -234,6 +261,9 @@ class SingerScreen {
       if (mouseXpos>(width*0.725-width*0.02) && mouseXpos<(width*0.725+width*0.02) 
         && mouseYpos>(height*0.2-width*0.02) && mouseYpos<(height*0.2+width*0.02)) {
           this.activeSinger = null; //ylakulman ruksia klikattu, suljetaan infoboksi
+      } else if ((mouseXpos>(width*0.37-width*0.1) && mouseXpos<(width*0.37+width*0.1) 
+        && mouseYpos>(height*0.77-height*0.035) && mouseYpos<(height*0.77+height*0.035)) && this.number != 0) {
+          screenInt = 4;
       }
     }
 
@@ -327,10 +357,10 @@ class OrchestraScreen {
   	background(backgr);
 
   	textAlign(CENTER);
-      textFont(createFont("Littledays"));
-      textSize(width*0.045); //skaalaus ikkunan koon mukaan
-      fill(0); //musta teksti
-      text("The Orchestra", width*0.5, height*0.08);
+    textFont(createFont("Littledays"));
+    textSize(width*0.045); //skaalaus ikkunan koon mukaan
+    fill(0); //musta teksti
+    text("The Orchestra", width*0.5, height*0.08);
 
   	imageMode(CENTER);
   	image(this.back, width*0.05, height*0.06, width*0.05, height*0.07);
@@ -482,9 +512,117 @@ class Instrument {
     
   }
 
-  
 }
 
+
+class VideoScreen {
+  int screenInt;
+
+  PImage backgr;
+  PImage back;
+  PImage movieImage;
+
+  PImage play;
+  PImage pause;
+  PImage stop;
+
+  PImage play2;
+  PImage pause2;
+  PImage stop2;
+
+  boolean playActive;
+  boolean pauseActive;
+  boolean stopActive;
+
+  VideoScreen(int screenInt, PImage movieImage) {
+    this.backgr = loadImage("stage.jpg");
+    this.backgr.resize(width, height);
+    this.back = loadImage("left37.png");
+    
+    this.screenInt = screenInt;
+    this.movieImage = movieImage;
+
+    this.play = loadImage("play-circled2.png");
+    this.pause = loadImage("pause-circled.png");
+    this.stop = loadImage("stop-circled.png");
+
+    this.play2 = loadImage("play-circled4.png");
+    this.pause2 = loadImage("pause-circled4.png");
+    this.stop2 = loadImage("stop-circled4.png");
+
+    this.playActive = false;
+    this.pauseActive = true;
+    this.stopActive = true;
+
+  }
+
+  void draw() {
+    
+    imageMode(CORNER);
+    background(this.backgr);
+    
+    fill(255); //valkoinen
+    stroke(0); //musta
+    strokeWeight(1);
+    
+    imageMode(CENTER);
+    image(this.movieImage, width/2, height*0.40, width*0.6, height*0.6); //videon mitat rajattu
+    
+    this.buttons();
+    
+  }
+
+  void buttons() {
+
+    imageMode(CENTER);
+    image(this.back, width*0.05, height*0.06, width*0.05, height*0.07);
+
+    if (this.playActive == true) {
+      image(this.play2, width*0.45, height*0.74, width*0.04, width*0.04);
+    } else {
+      image(this.play, width*0.45, height*0.74, width*0.04, width*0.04);
+    }
+    
+    if (this.pauseActive == true) {
+      image(this.pause2, width*0.5, height*0.74, width*0.04, width*0.04);
+    } else {
+      image(this.pause, width*0.5, height*0.74, width*0.04, width*0.04);
+    }
+    
+    if (this.stopActive == true) {
+      image(this.stop2, width*0.55, height*0.74, width*0.04, width*0.04);
+    } else {
+      image(this.stop, width*0.55, height*0.74, width*0.04, width*0.04);
+    }
+
+  }
+
+  void checkMouseClicked(int mouseXpos, int mouseYpos) {
+
+    //aanentoistonappulat ja ruksi
+    if (mouseXpos>(width*0.45-width*0.02) && mouseXpos<(width*0.45+width*0.02) 
+      && mouseYpos>(height*0.74-width*0.02) && mouseYpos<(height*0.74+width*0.02)) {
+        this.playActive = true;
+        this.pauseActive = false;
+        this.stopActive = false;
+   
+    } else if (mouseXpos>(width*0.5-width*0.02) && mouseXpos<(width*0.5+width*0.02) 
+      && mouseYpos>(height*0.74-width*0.02) && mouseYpos<(height*0.74+width*0.02)) {
+        this.playActive = false;
+        this.pauseActive = true;
+        this.stopActive = false;
+  
+    } else if (mouseXpos>(width*0.55-width*0.02) && mouseXpos<(width*0.55+width*0.02) 
+      && mouseYpos>(height*0.74-width*0.02) && mouseYpos<(height*0.74+width*0.02)) {
+        this.playActive = false;
+        this.pauseActive = true;
+        this.stopActive = true;    
+   
+    }
+
+  }
+
+}
 
 
 </script>
