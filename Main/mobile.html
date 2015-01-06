@@ -38,11 +38,11 @@ void draw() {
 void mouseClicked() { 
   if (this.screenInt == 1) {
     //siirtymŠt aloitusnŠytšltŠ muihin nŠyttšihin
-    if (mouseX>0 && mouseX<width && mouseY>height/12 && mouseY<(height/12)*3){
+    if (mouseX>0 && mouseX<width && mouseY>height/12 && mouseY<(height/12)*3 && this.start.helpClicked == false){
       //SingerScreeniin
       this.screenInt = 2;
     } else if (mouseX>(width/4) && mouseX<(width/4)*3 
-      && mouseY>((height/12)*3.1)-height/12 && mouseY<(height/12)*3.1+height/12) {
+      && mouseY>((height/12)*3.1)-height/12 && mouseY<(height/12)*3.1+height/12 && this.start.helpClicked == false) {
         //OrchestraScreeniin
         this.screenInt = 3;
     }
@@ -106,6 +106,16 @@ class StartScreen {
       strokeWeight(3);
       rectMode(CENTER);
       rect(width*0.5, width, width*0.85, width, width*0.1);
+
+      textAlign(CENTER);
+      textFont(createFont("Littledays"));
+      textSize(width*0.1125); //skaalaus ikkunan koon mukaan
+      fill(0); //tumma
+      text("Info", width*0.5, width*0.65);
+      textFont(createFont("Kirvy-Regular"));
+      textSize(width*0.04);
+      text("This application is designed for finding out more info on The Finnish National Opera's production The Cunning Little Vixen. By clicking on the fox figures on the stage, you'll find out about the singers. The conductor will lead you to learning about the orchestra.", width*0.13, width*0.8, width*0.75, width*0.6);
+      text("Created by: Emmi Linkola, Viivi Livio, Ilona Luukko, Joanna Mehtala", width*0.13, width*1.25, width*0.75, width*0.5);
     }
    	 
   }
@@ -114,7 +124,6 @@ class StartScreen {
     if (mouseXpos>(width*0.88-width*0.07) && mouseXpos<(width*0.88+width*0.07) 
         && mouseYpos>(width*1.66-width*0.07) && mouseYpos<(width*1.66+width*0.07)) {
       this.helpClicked = !this.helpClicked;
-      
     }
   }
 
